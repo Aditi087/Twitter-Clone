@@ -1,13 +1,12 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Auth from './components/auth/Auth';
+import Home from './components/home/Home';
 
 function App() {
   return (
-    <div>
-      <Auth/>
+    <div className="App">
+      <Home />
     </div>
   );
 }
