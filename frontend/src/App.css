@@ -30,6 +30,35 @@
 a {
   text-decoration: none;
 }
+.heading1 {
+  font-size: 65px;
+  font-weight: bold;
+  margin: 45px 0px;
+  font-family: "Segoe UI", Helvetica;
+  letter-spacing: 2px;
+}
+.heading3 {
+  font-size: 31px;
+  margin-bottom: 25px;
+  font-weight: bold;
+  letter-spacing: 3px;
+}
+.heading6 {
+  font-weight: bold;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+}
+.heading4 {
+  font-weight: bold;
+  font-size: 20px;
+}
+.small_font {
+  font-size: 13px;
+  line-height: 13px;
+}
+.footer_heading{
+  font-weight: bold;
+  font-size: 25px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -18,7 +18,7 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
 
   return (
     <div className="auth_body">
-      <Row className="g-0">
+      <Row className="g-0 row">
         <Col className="auth_part1">
           <FaTwitter id="auth_icon_big" />
         </Col>
@@ -49,7 +49,7 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
           </button>
           <div
             className="d-flex justify-content-between"
-            style={{ height: "25px", width: "20vw" }}
+            style={{ height: "25px", width: "20vw", display:"flex", justifyContent:"space-between" }}
           >
             <div className="line"></div>
             <p>or</p>

@@ -1,21 +1,23 @@
 .lsidebar_body {
-  width: 30vw;
-  border: 1px solid rgb(227, 226, 226);
-  min-height: 100vh;
-  height: 100%;
-  /* padding: 20px 80px; */
+  width: 26vw;
+  display: flex;
+  justify-content: center;
+  padding: 15px 0px;
+  height: 100vh;
+  position: fixed;
+  left: 0;
 }
 .lsidebar_components {
-  margin: 15px 60px;
+  width: fit-content;
 }
 .sidebar_icon {
   height: 1.8rem;
   width: 1.8rem;
-  color: rgb(18, 179, 243);
+  color: rgb(29, 155, 240);
 }
 .dd {
   display: flex;
-  margin-top: 20px;
+  margin-top: 30px;
   color: rgb(64, 63, 63);
 }
 .menu_icon {
@@ -30,31 +32,74 @@
 /* --- right side bar ---  */
 
 .rsidebar_body {
-  width: 30vw;
-  border: 1px solid rgb(227, 226, 226);
-  padding: 5px 50px;
+  width: 35vw;
+  height: 100vh;
+  position: fixed;
+  right: 0;
+}
+.rsidebar_body2{
+  padding-top: 10px;
+  padding-left: 30px;
+}
+.rsidebar_component{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(223, 222, 222, 0.656);
+  padding: 20px;
+  border-radius: 10px;
+  width: 20vw;
+  height: 35vh;
+}
+.home_sign_up{
+  font-weight: bold;
+}
+.terms2{
+  color: rgb(83, 100, 113);
+  /* width: 20vw; */
+}
+.terms2 a{
+  color: rgb(29, 155, 240);
+}
+.rsidebar_footer{
+  width: 20vw;
+  margin: 15px 0px;
+  text-align: justify;
+}
+.bb{
+  margin-right: 40px;
+  line-height: 25px;
+  color: rgb(60, 60, 60);
 }
 
 /* --- search ---  */
 
-#search {
-  position: sticky;
-  top: 0;
-}
-#search_textfield {
-  border: 1px solid gray;
+/* #search {
+
+} */
+#search_box {
+  border: none;
+  background-color: rgba(177, 176, 176, 0.218);
   display: flex;
   border-radius: 35px;
+  width: max-content;
 }
 .searchfield {
-  padding: 0px !important;
-  border: none !important;
-}
-.search_textfield {
-  padding: 0px !important;
-  border: none !important;
+  padding: 1px !important;
 }
 .MuiOutlinedInput-root {
   padding: 3px !important;
   border: none !important;
+}
+.css-1d3z3hw-MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+.css-1qqsdnr-MuiAutocomplete-root
+  .MuiAutocomplete-inputRoot
+  .MuiAutocomplete-input {
+  min-width: 28vw !important;
+  padding-top: 8px!important;
+}
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+  display: none !important;
 }
