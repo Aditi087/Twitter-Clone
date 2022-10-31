@@ -1,20 +1,27 @@
-import * as React from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { FaTwitter } from "react-icons/fa";
-import { GrApple } from "react-icons/gr";
-import { FcGoogle } from "react-icons/fc";
-import "./auth.css";
-import { Link } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-import AppleLogin from 'react-apple-login'
+import React, { useState } from 'react';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { FaTwitter } from 'react-icons/fa';
+import { GrApple } from 'react-icons/gr';
+import { FcGoogle } from 'react-icons/fc';
+import './auth.css';
+import { Link, useNavigate } from 'react-router-dom';
+import { useGoogleLogin } from '@react-oauth/google';
 
 interface IAuthProps {}
 
 const Auth: React.FunctionComponent<IAuthProps> = (props) => {
-  const responseGoogle = (response:any) => {
-    console.log(response);
-  };
+  const navigate = useNavigate();
+  const login = useGoogleLogin({
+    onSuccess: (tokenResponse: any) => {
+      console.log(tokenResponse);
+      console.log(tokenResponse.access_token);
+      localStorage.setItem('GloginToken', tokenResponse.access_token);
+      if (localStorage.getItem('GloginToken') !== null) {
+        navigate('/');
+      }
+    },
+  });
 
   return (
     <div className="auth_body">
@@ -26,22 +33,11 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
           <FaTwitter id="auth_icon_small" />
           <span className="heading1">Happening now</span>
           <span className="heading3">Join Twitter today.</span>
-          <button className="signup_btn">
+          <button className="signup_btn" onClick={() => login()}>
             <FcGoogle className="me-1" />
-            <GoogleLogin
-            clientId="754454815100-scfu0omot514a1g64javh9pruvcgpkg2.apps.googleusercontent.com"
-            render={renderProps => (
-              <button className="g-btn" onClick={renderProps.onClick} disabled={renderProps.disabled}>Sign up with Google</button>
-            )}
-            buttonText="Login"
-            onSuccess={responseGoogle}
-            onFailure={responseGoogle}
-            cookiePolicy={'single_host_origin'}
-            isSignedIn={true}
-          />
-            
+            Sign in with Google
           </button>
-          
+
           <button className="signup_btn">
             <GrApple className="me-1 mb-1" />
             {/* <AppleLogin clientId="com.react.apple.login" redirectURI="https://redirectUrl.com" /> */}
@@ -49,7 +45,12 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
           </button>
           <div
             className="d-flex justify-content-between"
-            style={{ height: "25px", width: "20vw" }}
+            style={{
+              height: '25px',
+              width: '20vw',
+              display: 'flex',
+              justifyContent: 'space-between',
+            }}
           >
             <div className="line"></div>
             <p>or</p>
@@ -59,12 +60,12 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
             Sign up with a phone number or em..
           </button>
           <span className="small_font terms">
-            By signing up, you agree to the <Link to="">Terms of Service</Link>{" "}
-            and <Link to="">Privacy Policy</Link>, including{" "}
+            By signing up, you agree to the <Link to="">Terms of Service</Link>{' '}
+            and <Link to="">Privacy Policy</Link>, including{' '}
             <Link to="">Cookie Use.</Link>
           </span>
           <span className="heading6 mb-2">Already have an account?</span>
-          <button className="signup_btn" style={{ color: "#1D9BF0" }}>
+          <button className="signup_btn" style={{ color: '#1D9BF0' }}>
             <b>Sign in</b>
           </button>
         </Col>

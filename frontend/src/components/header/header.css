@@ -1,0 +1,31 @@
+.header_body {
+  background-color: rgba(255, 255, 255, 0.871);
+  position: sticky;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+.header_body2 {
+  padding: 4px 15px;
+}
+
+.header_search {
+  display: flex;
+  justify-content: space-between;
+}
+
+.nav {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  margin: 18px 0px;
+}
+.nav_option {
+  width: 20%;
+  margin: 0;
+  text-align: justify;
+  font-weight: bold;
+}
+.nav_option a {
+  color: rgb(48, 48, 48);
+}

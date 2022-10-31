@@ -1,14 +1,19 @@
 .auth_body {
-  /* width: 100vw; */
+  width: 100vw;
+  /* display: flex; */
+}
+.row {
+  display: flex;
 }
 .auth_part1 {
-  background-image: url("../../assets/auth_background.png");
+  background-image: url('../../assets/auth_background.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  width: 50%;
   /* padding: auto; */
 }
 #auth_icon_big {
@@ -27,35 +32,18 @@
   flex-direction: column;
   padding: 40px;
 }
-.heading1 {
-  font-size: 65px;
-  font-weight: bold;
-  margin: 45px 0px;
-  font-family: "Segoe UI", Helvetica;
-  letter-spacing: 2px;
-}
-.heading3 {
-  font-size: 31px;
-  margin-bottom: 25px;
-  font-weight: bold;
-  letter-spacing: 3px;
-}
-.heading6 {
-  font-weight: bold;
-  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
-}
 .signup_btn {
   border-radius: 35px;
   width: 20vw;
   padding: 0px 16px;
-  height: 40px;
+  height: 40px !important;
   margin: 7px 0px;
   border: 1px solid rgb(207, 217, 222);
   background-color: white;
 }
-.g-btn{
-    border: none;
-    background-color: transparent;
+.g-btn {
+  border: none;
+  background-color: transparent;
 }
 .sign_phone {
   background-color: rgb(29, 155, 240);
@@ -69,14 +57,13 @@
   width: 45%;
   margin-top: 13px;
 }
-.small_font {
-  font-size: 11px;
-  line-height: 12px;
-}
 .terms {
   color: rgb(83, 100, 113);
   margin-bottom: 50px;
   width: 20vw;
+}
+.terms a {
+  color: rgb(29, 155, 240);
 }
 .auth_footer {
   padding: 0px 50px;
