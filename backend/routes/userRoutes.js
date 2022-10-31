@@ -1,0 +1,77 @@
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const userModel = require('../models/userModels');
+
+router.route('/register').post(async (req, res) => {
+  const { name, email, phone, dateOfBirth, password } = req.body;
+  let isExist;
+  if (email) {
+    isExist = await userModel.findOne({ email });
+  } else if (phone) {
+    isExist = await userModel.findOne({ phone });
+  }
+  if (isExist) {
+    return res.status(201).json({ message: "You're Already Registered" });
+  } else {
+    const newUser = new userModel({
+      name,
+      email,
+      password,
+      phone,
+      dateOfBirth,
+    });
+
+    bcrypt.genSalt(10, (err, salt) => {
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser
+          .save()
+          .then((user) => res.json(user))
+          .catch((err) => console.log(err));
+      });
+    });
+  }
+});
+
+router.route('/login').post(async (req, res) => {
+  const { email, phone, password } = req.body;
+  let user;
+  if (email.length) {
+    user = await userModel.findOne({ email });
+  } else if (phone) {
+    user = await userModel.findOne({ phone });
+  }
+  if (user) {
+    bcrypt.compare(password, user.password).then((isMatch) => {
+      if (isMatch) {
+        const payload = {
+          id: user.id,
+          name: user.name,
+        };
+
+        jwt.sign(
+          payload,
+          process.env.JWT_TOKEN,
+          {
+            expiresIn: 604800000,
+          },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token,
+            });
+          }
+        );
+      } else {
+        return res.status(400).json({ message: 'Invalid User or Password' });
+      }
+    });
+  } else {
+    return res.status(400).json({ message: 'Invalid User or Password' });
+  }
+});
+
+module.exports = router;
