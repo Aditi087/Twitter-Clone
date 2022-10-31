@@ -28,13 +28,13 @@
   color: #61dafb;
 } */
 a {
-  text-decoration: none;
+  text-decoration: none !important;
 }
 .heading1 {
   font-size: 65px;
   font-weight: bold;
   margin: 45px 0px;
-  font-family: "Segoe UI", Helvetica;
+  font-family: 'Segoe UI', Helvetica;
   letter-spacing: 2px;
 }
 .heading3 {
@@ -45,7 +45,7 @@ a {
 }
 .heading6 {
   font-weight: bold;
-  font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+  font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
 }
 .heading4 {
   font-weight: bold;
@@ -55,7 +55,7 @@ a {
   font-size: 13px;
   line-height: 13px;
 }
-.footer_heading{
+.footer_heading {
   font-weight: bold;
   font-size: 25px;
 }

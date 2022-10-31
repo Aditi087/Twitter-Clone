@@ -2,11 +2,11 @@
   width: 100vw;
   /* display: flex; */
 }
-.row{
+.row {
   display: flex;
 }
 .auth_part1 {
-  background-image: url("../../assets/auth_background.png");
+  background-image: url('../../assets/auth_background.png');
   background-size: cover;
   background-position: center;
   height: 100vh;
@@ -36,14 +36,14 @@
   border-radius: 35px;
   width: 20vw;
   padding: 0px 16px;
-  height: 40px;
+  height: 40px !important;
   margin: 7px 0px;
   border: 1px solid rgb(207, 217, 222);
   background-color: white;
 }
-.g-btn{
-    border: none;
-    background-color: transparent;
+.g-btn {
+  border: none;
+  background-color: transparent;
 }
 .sign_phone {
   background-color: rgb(29, 155, 240);
@@ -62,7 +62,7 @@
   margin-bottom: 50px;
   width: 20vw;
 }
-.terms a{
+.terms a {
   color: rgb(29, 155, 240);
 }
 .auth_footer {

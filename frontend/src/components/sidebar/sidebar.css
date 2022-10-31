@@ -37,36 +37,37 @@
   position: fixed;
   right: 0;
 }
-.rsidebar_body2{
+.rsidebar_body2 {
   padding-top: 10px;
   padding-left: 30px;
 }
-.rsidebar_component{
+.rsidebar_component {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border: 1px solid rgba(223, 222, 222, 0.656);
   padding: 20px;
   border-radius: 10px;
-  width: 20vw;
-  height: 35vh;
+  width: 25vw;
+  height: 42vh;
+  /* height: max-content; */
 }
-.home_sign_up{
+.home_sign_up {
   font-weight: bold;
 }
-.terms2{
+.terms2 {
   color: rgb(83, 100, 113);
   /* width: 20vw; */
 }
-.terms2 a{
+.terms2 a {
   color: rgb(29, 155, 240);
 }
-.rsidebar_footer{
+.rsidebar_footer {
   width: 20vw;
   margin: 15px 0px;
   text-align: justify;
 }
-.bb{
+.bb {
   margin-right: 40px;
   line-height: 25px;
   color: rgb(60, 60, 60);
@@ -98,8 +99,8 @@
   .MuiAutocomplete-inputRoot
   .MuiAutocomplete-input {
   min-width: 28vw !important;
-  padding-top: 8px!important;
+  padding-top: 8px !important;
 }
-.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root{
+.css-14s5rfu-MuiFormLabel-root-MuiInputLabel-root {
   display: none !important;
 }
