@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Home from '../feed/home/Home';
 import LeftSidebar from '../sidebar/LeftSidebar';
 import RightSidebar from '../sidebar/RightSidebar';
@@ -25,6 +25,9 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
   const validPassword = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/);
+  const nameRef = useRef(null);
+  const phoneRef = useRef(null);
+  const passRef = useRef(null);
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const handleClose = () => setShow(false);
@@ -41,7 +44,10 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   const [yearSelect, setYearSelect] = useState(0);
   const [dob, setDob] = useState(0);
   var newDate = new Date(yearSelect, monthSelect - 1, dateSelect);
-  setDob(newDate.getTime());
+  useEffect(() => {
+    setDob(newDate.getTime());
+  }, [monthSelect, dateSelect, yearSelect]);
+
   const [inputState, setInputState] = useState({
     name: '',
     email: '',
@@ -51,7 +57,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   });
 
   const [error, setError] = useState({});
-  const [confirm, setConfirm] = useState();
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('GloginToken')
@@ -114,12 +119,12 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   };
   console.log(monthSelect, yearSelect, 'ooo');
 
-  let label, value;
+  let name, value;
   const handleChange = (event: any) => {
     event.persist();
-    label = event.target.label;
+    name = event.target.name;
     value = event.target.value;
-    setInputState({ ...inputState, [label]: value });
+    setInputState({ ...inputState, [name]: value });
   };
 
   // const validation = () => {
@@ -170,8 +175,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
           dateOfBirth: 0,
           password: '',
         });
-        // setDob(0);
-        // setConfirm('');
         // navigate('/login');
       })
       .catch((err) => {
@@ -284,7 +287,9 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
               >
                 <TextField
                   id="standard-basic"
-                  label="name"
+                  label="Name"
+                  name="name"
+                  ref={nameRef}
                   value={inputState.name}
                   variant="standard"
                   onChange={handleChange}
@@ -302,7 +307,9 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
               >
                 <TextField
                   id="standard-basic"
-                  label="phone"
+                  label="Phone"
+                  name="phone"
+                  ref={phoneRef}
                   value={inputState.phone}
                   variant="standard"
                   onChange={handleChange}
@@ -368,7 +375,9 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
               >
                 <TextField
                   id="standard-basic"
-                  label="password"
+                  label="Password"
+                  name="password"
+                  ref={phoneRef}
                   value={inputState.password}
                   variant="standard"
                   onChange={handleChange}
