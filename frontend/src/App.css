@@ -39,7 +39,7 @@ a {
 }
 .heading3 {
   font-size: 31px;
-  margin-bottom: 25px;
+  /* margin-bottom: 25px; */
   font-weight: bold;
   letter-spacing: 3px;
 }

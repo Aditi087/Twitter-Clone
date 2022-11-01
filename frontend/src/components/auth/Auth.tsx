@@ -32,7 +32,7 @@ const Auth: React.FunctionComponent<IAuthProps> = (props) => {
         <Col className="auth_part2">
           <FaTwitter id="auth_icon_small" />
           <span className="heading1">Happening now</span>
-          <span className="heading3">Join Twitter today.</span>
+          <span className="heading3 mb-5">Join Twitter today.</span>
           <button className="signup_btn" onClick={() => login()}>
             <FcGoogle className="me-1" />
             Sign in with Google
