@@ -13,6 +13,5 @@
   overflow-y: scroll;
 }
 .feed::-webkit-scrollbar {
-  /* float: right; */
   display: none;
 }
