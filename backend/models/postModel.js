@@ -1,39 +1,23 @@
 const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-  userId: {
+const postSchema = mongoose.Schema({
+  postId: {
     type: Number,
     default: Date.now(),
+  },
+  userId: {
+    type: Number,
+    required: true,
   },
   name: {
     type: String,
     required: true,
   },
-  email: {
-    type: String,
-    default: '',
-  },
-  phone: {
-    type: Number,
-    default: 0,
-  },
-  dateOfBirth: {
-    type: Number,
-  },
-  role: {
-    type: String,
-    required: true,
-    default: 'user',
-  },
-  password: {
+  content: {
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now(),
-  },
-  following: [
+  like: [
     {
       userId: {
         type: Number,
@@ -43,7 +27,21 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
-  followers: [
+
+  comment: [
+    {
+      userId: {
+        type: Number,
+      },
+      name: {
+        type: String,
+      },
+      subComment: {
+        type: String,
+      },
+    },
+  ],
+  retweet: [
     {
       userId: {
         type: Number,
@@ -55,4 +53,4 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('Posts', postSchema);
