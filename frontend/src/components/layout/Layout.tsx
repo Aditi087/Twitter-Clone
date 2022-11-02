@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from '../feed/home/Home';
 import LeftSidebar from '../sidebar/LeftSidebar';
 import RightSidebar from '../sidebar/RightSidebar';
@@ -24,19 +24,23 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   const validateEmail = RegExp(
     /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
   );
+  const validPhone = RegExp(/^[6-9]{1}[0-9]{9}$/);
   const validPassword = RegExp(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,20}$/);
-  const nameRef = useRef(null);
-  const phoneRef = useRef(null);
-  const passRef = useRef(null);
+
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  const [show3, setShow3] = useState(false);
   const handleClose = () => setShow(false);
   const handleClose2 = () => setShow2(false);
+  const handleClose3 = () => setShow3(false);
   const handleShow = () => {
     setShow(true);
   };
   const handleShow2 = () => {
     setShow2(true);
+  };
+  const handleShow3 = () => {
+    setShow3(true);
   };
 
   const [dateSelect, setDateSelect] = useState(0);
@@ -53,14 +57,18 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
     email: '',
     phone: '',
     password: '',
-    dateOfBirth: dob,
   });
 
+  const [phoneoremail, setPhoneoremail] = useState('');
+  const [password, setPassword] = useState('');
+
   const [error, setError] = useState({});
+  const [loginError, setLoginError] = useState('');
 
   const [isLoggedIn, setIsLoggedIn] = useState(
     localStorage.getItem('GloginToken')
   );
+
   const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: any) => {
@@ -97,7 +105,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   for (let i = 1; i <= days; i++) {
     date.push(i);
   }
-  console.log(date, 'p');
 
   const currentYear = new Date().getFullYear();
   const range = (start: number, stop: number, step: number) =>
@@ -153,14 +160,32 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   //   return error;
   // };
 
-  const submitHandler = (event: any) => {
+  const [signupCred, setSignupCred] = useState('p');
+
+  const signupToggle = () => {
+    if (signupCred === 'p') {
+      setSignupCred('e');
+    } else {
+      setSignupCred('p');
+    }
+  };
+
+  const submitHandler = async (event: any) => {
     event.preventDefault();
     // let ErrorList = validation();
     // setError(validation());
     // if (Object.keys(ErrorList).length !== 0) {
     // } else {
-    axios
-      .post('http://localhost:5000/register', inputState, {
+    let data;
+    data = {
+      name: inputState.name,
+      email: inputState.email,
+      phone: inputState.phone,
+      password: inputState.password,
+      dateOfBirth: dob,
+    };
+    await axios
+      .post('http://localhost:5000/register', data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -172,13 +197,59 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
           name: '',
           email: '',
           phone: '',
-          dateOfBirth: 0,
           password: '',
         });
+        setDob(0);
         // navigate('/login');
       })
       .catch((err) => {
         // toast(err.response.data.message);
+      });
+    // }
+  };
+
+  const loginChange = (event: any) => {
+    event.persist();
+    setPhoneoremail(event.target.value);
+  };
+  const passwordChange = (event: any) => {
+    event.persist();
+    setPassword(event.target.value);
+  };
+
+  // const LoginNext = (event: any) => {
+  const LoginSubmit = async (event: any) => {
+    event.preventDefault();
+    let data;
+    if (validateEmail.test(phoneoremail)) {
+      console.log('yes');
+      data = {
+        email: phoneoremail,
+        phone: '',
+        password: password,
+      };
+    } else if (validPhone.test(phoneoremail)) {
+      data = {
+        email: '',
+        phone: phoneoremail,
+        password: password,
+      };
+    }
+
+    await axios
+      .post('http://localhost:5000/login', data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        // swal('Good job!', 'Your Registration is successful', 'success');
+        alert('Good job! Your login is successful');
+
+        navigate('/');
+      })
+      .catch((err) => {
+        alert(err.response.data.message);
       });
     // }
   };
@@ -204,13 +275,112 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
             </div>
           </div>
           <div className="footer_part2">
-            <button className="footer_btn login_footer">Log in</button>
+            <button className="footer_btn login_footer" onClick={handleShow3}>
+              Log in
+            </button>
             <button className="footer_btn signin_footer" onClick={handleShow}>
               Sign up
             </button>
           </div>
         </div>
       </div>
+
+      {/* --- login modal ---  */}
+
+      <Modal show={show3} backdrop="static" className="modal">
+        <Modal.Header>
+          <Modal.Title className="modal_header">
+            <IoMdClose onClick={handleClose3} />
+            <FaTwitter className="modal_icon" />
+            <div></div>
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="modal_body">
+          <div className="modal_body_content">
+            <span className="heading4">Sign in to Twitter</span>
+            <button className="signup_btn" onClick={() => login()}>
+              <FcGoogle className="me-1" />
+              Sign in with Google
+            </button>
+
+            <button className="signup_btn">
+              <GrApple className="me-1 mb-1" />
+              <b>Sign up with Apple</b>
+            </button>
+            <div
+              className="d-flex justify-content-between"
+              style={{
+                height: '25px',
+                width: '20vw',
+                display: 'flex',
+                justifyContent: 'space-between',
+              }}
+            >
+              <div className="line"></div>
+              <p>or</p>
+              <div className="line"></div>
+            </div>
+            <div className="modal_input">
+              <Box
+                component="form"
+                sx={{
+                  '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  id="standard-basic"
+                  label="Phone or Email"
+                  name="email"
+                  value={phoneoremail}
+                  variant="standard"
+                  onChange={loginChange}
+                />
+              </Box>
+            </div>
+            <div className="modal_input">
+              <Box
+                component="form"
+                sx={{
+                  '& > :not(style)': { m: 1, width: '25ch' },
+                }}
+                noValidate
+                autoComplete="off"
+              >
+                <TextField
+                  id="standard-basic"
+                  label="Password"
+                  name="password"
+                  value={password}
+                  variant="standard"
+                  onChange={passwordChange}
+                />
+              </Box>
+            </div>
+            <button className="signup_btn sign_phone2" onClick={LoginSubmit}>
+              Submit
+            </button>
+            <span className="heading6 mb-2 terms">
+              Don’t have an account?{' '}
+              <Link
+                to="#"
+                onClick={() => {
+                  handleShow();
+                  handleClose3();
+                }}
+              >
+                Sign up
+              </Link>
+            </span>
+          </div>
+        </Modal.Body>
+      </Modal>
+
+      {/* --- login modal end ---  */}
+
+      {/* --- signup modal ---  */}
+
       <Modal show={show} backdrop="static" className="modal">
         <Modal.Header>
           <Modal.Title className="modal_header">
@@ -260,7 +430,16 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
               <Link to="">Cookie Use.</Link>
             </span>
             <span className="heading6 mb-2 terms">
-              Have an account already? <Link to="#">Log in</Link>
+              Have an account already?{' '}
+              <Link
+                to="#"
+                onClick={() => {
+                  handleShow3();
+                  handleClose();
+                }}
+              >
+                Log in
+              </Link>
             </span>
           </div>
         </Modal.Body>
@@ -289,7 +468,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
                   id="standard-basic"
                   label="Name"
                   name="name"
-                  ref={nameRef}
                   value={inputState.name}
                   variant="standard"
                   onChange={handleChange}
@@ -305,17 +483,37 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
                 noValidate
                 autoComplete="off"
               >
-                <TextField
-                  id="standard-basic"
-                  label="Phone"
-                  name="phone"
-                  ref={phoneRef}
-                  value={inputState.phone}
-                  variant="standard"
-                  onChange={handleChange}
-                />
+                {signupCred === 'p' ? (
+                  <TextField
+                    id="standard-basic"
+                    label="Phone"
+                    name="phone"
+                    value={inputState.phone}
+                    variant="standard"
+                    onChange={handleChange}
+                  />
+                ) : (
+                  <TextField
+                    id="standard-basic"
+                    label="Email"
+                    name="email"
+                    value={inputState.email}
+                    variant="standard"
+                    onChange={handleChange}
+                  />
+                )}
               </Box>
             </div>
+            {signupCred === 'p' ? (
+              <p onClick={signupToggle} className="phone_or_email">
+                use email instead
+              </p>
+            ) : (
+              <p onClick={signupToggle} className="phone_or_email">
+                use phone instead
+              </p>
+            )}
+
             <div
               className="d-flex flex-column m-3"
               style={{ textAlign: 'left' }}
@@ -377,7 +575,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
                   id="standard-basic"
                   label="Password"
                   name="password"
-                  ref={phoneRef}
                   value={inputState.password}
                   variant="standard"
                   onChange={handleChange}
@@ -387,9 +584,13 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={submitHandler}>Confirm</Button>
+          <button onClick={submitHandler} className="signup_btn sign_phone2">
+            Confirm
+          </button>
         </Modal.Footer>
       </Modal>
+
+      {/* --- signup modal end ---  */}
     </>
   );
 };
