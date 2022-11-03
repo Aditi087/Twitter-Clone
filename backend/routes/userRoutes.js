@@ -16,11 +16,13 @@ router.route('/register').post(async (req, res) => {
     return res.status(201).json({ message: "You're Already Registered" });
   } else {
     const newUser = new userModel({
+      userId: Date.now(),
       name,
       email,
       password,
       phone,
       dateOfBirth,
+      createdAt: Date.now(),
     });
 
     bcrypt.genSalt(10, (err, salt) => {
@@ -121,5 +123,7 @@ router.route('/following').put(async (req, res) => {
     res.status(500).send({ message: 'Data not found !' });
   }
 });
+
+// router.route('/tweetAndRetweet').get(async (res, res) => {});
 
 module.exports = router;
