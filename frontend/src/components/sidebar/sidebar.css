@@ -28,6 +28,14 @@
 .menu_item {
   font-size: 20px;
 }
+.logout_section {
+  margin-top: 20px;
+  padding: 10px 30px;
+  background-color: bisque;
+  border-radius: 35px;
+  display: flex;
+  justify-content: space-between;
+}
 
 /* --- right side bar ---  */
 

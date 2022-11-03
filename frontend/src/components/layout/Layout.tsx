@@ -65,9 +65,15 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   const [error, setError] = useState({});
   const [loginError, setLoginError] = useState('');
 
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem('GloginToken')
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (
+      localStorage.getItem('GloginToken') !== null ||
+      localStorage.getItem('token') !== null
+    ) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const navigate = useNavigate();
   const login = useGoogleLogin({
@@ -244,8 +250,12 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
       .then((res) => {
         // swal('Good job!', 'Your Registration is successful', 'success');
         alert('Good job! Your login is successful');
-
+        console.log(res);
+        localStorage.setItem('token', res?.data?.token);
+        localStorage.setItem('name', res?.data?.user?.name);
+        localStorage.setItem('userId', res?.data?.user?.userID);
         navigate('/');
+        setShow3(false);
       })
       .catch((err) => {
         alert(err.response.data.message);
@@ -263,26 +273,28 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
         <RightSidebar />
       </div>
       {/* <Footer1 /> */}
-      <div id="footer1_body">
-        <div className="footer1_body2">
-          <div className="footer_part1">
-            <div className="footer_content1">
-              <span className="footer_heading">
-                Don’t miss what’s happening
-              </span>
-              <span>People on Twitter are the first to know.</span>
+      {isLoggedIn === true && (
+        <div id="footer1_body">
+          <div className="footer1_body2">
+            <div className="footer_part1">
+              <div className="footer_content1">
+                <span className="footer_heading">
+                  Don’t miss what’s happening
+                </span>
+                <span>People on Twitter are the first to know.</span>
+              </div>
+            </div>
+            <div className="footer_part2">
+              <button className="footer_btn login_footer" onClick={handleShow3}>
+                Log in
+              </button>
+              <button className="footer_btn signin_footer" onClick={handleShow}>
+                Sign up
+              </button>
             </div>
           </div>
-          <div className="footer_part2">
-            <button className="footer_btn login_footer" onClick={handleShow3}>
-              Log in
-            </button>
-            <button className="footer_btn signin_footer" onClick={handleShow}>
-              Sign up
-            </button>
-          </div>
         </div>
-      </div>
+      )}
 
       {/* --- login modal ---  */}
 

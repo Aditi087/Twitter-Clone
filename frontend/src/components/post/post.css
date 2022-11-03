@@ -27,8 +27,11 @@
 }
 .tweet_post_button {
   padding: 8px 18px;
-  background-color: rgb(29, 155, 240);
+  background-color: rgb(127, 203, 253);
   color: white;
   border: none;
   border-radius: 35px;
+}
+.disable_btn {
+  background-color: rgb(29, 155, 240) !important;
 }
