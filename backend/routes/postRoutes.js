@@ -13,7 +13,7 @@ router.route('/addTweet').post(async (req, res) => {
   const name = user.name;
   if (userId && content) {
     await postModel
-      .create({ userId, name, content })
+      .create({ userId, name, content, postId: Date.now(), postAt: Date.now() })
       .then((data) => {
         return res
           .status(200)
@@ -114,6 +114,12 @@ router.route('/retweet').put(async (req, res) => {
   } else {
     res.status(404).send({ message: 'Data Not Found' });
   }
+});
+
+router.route('/allPost').get(async (req, res) => {
+  const { userId } = req.query;
+  const allPost = await postModel.find({ userId }).sort({ postId: -1 });
+  res.send({ allPost });
 });
 
 module.exports = router;
