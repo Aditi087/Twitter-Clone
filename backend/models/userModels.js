@@ -53,6 +53,16 @@ const userSchema = new mongoose.Schema({
       },
     },
   ],
+  retweet: [
+    {
+      postId: {
+        type: Number,
+      },
+      retweetTime: {
+        type: Date,
+      },
+    },
+  ],
 });
 
 module.exports = mongoose.model('User', userSchema);
