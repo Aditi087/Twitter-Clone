@@ -75,6 +75,45 @@ router.route('/comment').put(async (req, res) => {
   }
 });
 
-router.route('/retweet').put(async (req, res) => {});
+router.route('/retweet').put(async (req, res) => {
+  const { postId, userId } = req.body;
+  const singlePost = await postModel.findOne({ postId });
+  const singleUser = await userModel.findOne({ userId });
+  const name = singleUser.name;
+  if (singlePost && singleUser) {
+    await postModel
+      .updateOne(
+        { postId },
+        { $set: { retweet: [...singlePost.retweet, { userId, name }] } }
+      )
+      .then(async () => {
+        await userModel
+          .updateOne(
+            { userId },
+            {
+              $set: {
+                retweet: [
+                  ...singleUser.retweet,
+                  { postId, retweetTime: Date.now() },
+                ],
+              },
+            }
+          )
+          .then(() => {
+            res.status(200).send({ message: 'Retweet Succesfully' });
+          })
+          .catch((err) => {
+            res
+              .status(401)
+              .send({ message: 'Cannot update user timeline', err });
+          });
+      })
+      .catch((err) => {
+        res.status(402).send({ message: 'Cannot retweet', err });
+      });
+  } else {
+    res.status(404).send({ message: 'Data Not Found' });
+  }
+});
 
 module.exports = router;

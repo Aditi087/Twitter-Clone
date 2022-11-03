@@ -62,6 +62,7 @@ router.route('/login').post(async (req, res) => {
             res.json({
               success: true,
               token: 'Bearer ' + token,
+              user: { userID: user.userId, name: user.name },
             });
           }
         );
@@ -71,6 +72,53 @@ router.route('/login').post(async (req, res) => {
     });
   } else {
     return res.status(400).json({ message: 'Invalid User or Password' });
+  }
+});
+
+router.route('/following').put(async (req, res) => {
+  const { userId, followingId } = req.body;
+  const followingUser = await userModel.findOne({ userId: followingId });
+  const user = await userModel.findOne({ userId });
+  if (followingUser && user) {
+    await userModel
+      .updateOne(
+        { userId },
+        {
+          $set: {
+            following: [
+              ...user.following,
+              { userId: followingId, name: followingUser.name },
+            ],
+          },
+        }
+      )
+      .then(async () => {
+        await userModel
+          .updateOne(
+            { userId: followingId },
+            {
+              $set: {
+                followers: [
+                  ...followingUser.followers,
+                  { userId, name: user.name },
+                ],
+              },
+            }
+          )
+          .then(() => {
+            res
+              .status(200)
+              .send({ message: 'Following Succesfully -- (followers)' });
+          })
+          .catch((err) => {
+            res.status(402).send({ message: 'cannot update followers', err });
+          });
+      })
+      .catch((err) => {
+        res.status(403).send({ message: 'cannot update following', err });
+      });
+  } else {
+    res.status(500).send({ message: 'Data not found !' });
   }
 });
 
