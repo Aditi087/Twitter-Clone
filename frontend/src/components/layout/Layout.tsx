@@ -101,7 +101,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   }
   const date: any = [];
   const days = getDaysInMonth(yearSelect, monthSelect);
-  console.log(days);
+  // console.log(days);
   for (let i = 1; i <= days; i++) {
     date.push(i);
   }
@@ -113,7 +113,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
       (_, i) => start + i * step
     );
   const year = range(currentYear, currentYear - 60, -1);
-  console.log(year, 'iii');
+  // console.log(year, 'iii');
 
   const dateChange = (e: any) => {
     setDateSelect(parseInt(e?.target.value));
@@ -124,7 +124,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
   const yearChange = (e: any) => {
     setYearSelect(e.target.value);
   };
-  console.log(monthSelect, yearSelect, 'ooo');
+  // console.log(monthSelect, yearSelect, 'ooo');
 
   let name, value;
   const handleChange = (event: any) => {
@@ -222,7 +222,6 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
     event.preventDefault();
     let data;
     if (validateEmail.test(phoneoremail)) {
-      console.log('yes');
       data = {
         email: phoneoremail,
         phone: '',

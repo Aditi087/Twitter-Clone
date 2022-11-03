@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Card } from 'react-bootstrap';
 import HomeHeader from '../../header/HomeHeader';
+import TweetPost from '../../post/TweetPost';
 
 interface IHomeProps {}
 
@@ -9,6 +10,7 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
     <>
       <HomeHeader />
       <div className="home_body">
+        <TweetPost />
         <Card>
           <Card.Img variant="top" src="holder.js/100px180" />
           <Card.Body>

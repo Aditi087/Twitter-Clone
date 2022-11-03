@@ -1,0 +1,34 @@
+.tweet_post_body {
+  width: 100%;
+  padding: 15px 20px;
+}
+.post_user {
+  height: fit-content;
+  width: fit-content;
+  border-radius: 50%;
+  background-color: rgb(189, 189, 189);
+  display: flex;
+  justify-content: center;
+}
+.tweet_post_input {
+  height: 100%;
+  width: 100%;
+  padding: 0px 15px;
+  border: none;
+  margin-left: 2px;
+}
+.tweet_post_input::placeholder {
+  font-size: 18px;
+  font-weight: 500;
+}
+.tweet_post_input:focus {
+  border: none !important;
+  outline: none !important;
+}
+.tweet_post_button {
+  padding: 8px 18px;
+  background-color: rgb(29, 155, 240);
+  color: white;
+  border: none;
+  border-radius: 35px;
+}

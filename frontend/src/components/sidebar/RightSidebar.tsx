@@ -24,7 +24,7 @@ const RightSidebar: React.FunctionComponent<IRightSidebarProps> = (props) => {
     },
   });
 
-  console.log(isLoggedIn);
+  // console.log(isLoggedIn);
 
   return (
     <div className="rsidebar_body">
