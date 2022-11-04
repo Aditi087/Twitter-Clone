@@ -41,7 +41,7 @@ router.route('/register').post(async (req, res) => {
 router.route('/login').post(async (req, res) => {
   const { email, phone, password } = req.body;
   let user;
-  if (email.length) {
+  if (email) {
     user = await userModel.findOne({ email });
   } else if (phone) {
     user = await userModel.findOne({ phone });
