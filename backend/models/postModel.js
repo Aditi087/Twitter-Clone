@@ -17,6 +17,16 @@ const postSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  images: [
+    {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+  ],
   like: [
     {
       userId: {

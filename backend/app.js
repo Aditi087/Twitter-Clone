@@ -7,9 +7,15 @@ const googleLogin = require('./routes/googleLogin');
 const postRoute = require('./routes/postRoutes');
 
 dotenv.config();
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(
+  bodyParser.urlencoded({
+    limit: '50mb',
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use('/', user);
 app.use('/post', postRoute);

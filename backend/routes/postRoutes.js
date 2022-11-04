@@ -2,18 +2,41 @@ const express = require('express');
 const router = express.Router();
 const postModel = require('../models/postModel');
 const userModel = require('../models/userModels');
+const cloudinary = require('cloudinary');
 
 router.route('/').get(async (req, res) => {
   res.send('post Routes');
 });
 
 router.route('/addTweet').post(async (req, res) => {
-  const { userId, content } = req.body;
+  const { userId, content, images } = req.body;
   const user = await userModel.findOne({ userId });
   const name = user.name;
+  const imageLinks = [];
+  for (let i = 0; i < images.length; i++) {
+    const result = await cloudinary.v2.uploader
+      .upload(images[i], {
+        folder: 'twitter/posts/',
+      })
+      .catch((err) => {
+        return res.status(401).send(err);
+      });
+    imageLinks.push({
+      public_id: result.public_id,
+      url: result.secure_url,
+    });
+  }
+  // req.body.images = imageLinks;
   if (userId && content) {
     await postModel
-      .create({ userId, name, content, postId: Date.now(), postAt: Date.now() })
+      .create({
+        userId,
+        name,
+        content,
+        postId: Date.now(),
+        postAt: Date.now(),
+        images: imageLinks,
+      })
       .then((data) => {
         return res
           .status(200)
