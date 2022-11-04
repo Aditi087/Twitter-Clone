@@ -1,8 +1,8 @@
-import { Button } from "@mui/material";
-import * as React from "react";
-import { useState } from "react";
-import { Modal } from "react-bootstrap";
-import "./footer.css";
+import { Button } from '@mui/material';
+import * as React from 'react';
+import { useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import './footer.css';
 
 interface IFooter1Props {}
 

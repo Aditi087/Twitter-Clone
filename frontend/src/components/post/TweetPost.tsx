@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { HiUser } from 'react-icons/hi';
-import { useNavigate } from 'react-router-dom';
+import { TiUser } from 'react-icons/ti';
 import './post.css';
 
 interface ITweetPostProps {}
@@ -42,14 +41,12 @@ const TweetPost: React.FunctionComponent<ITweetPostProps> = (props) => {
   return (
     <div className="tweet_post_body">
       <Row>
-        <Col xs={1} className="g-0">
+        <Col xs={2} className="g-0">
           <div className="post_user">
-            <HiUser
-              style={{ height: '2.6rem', width: '2.6rem', margin: '3px' }}
-            />
+            <TiUser style={{ height: '2.8rem', width: '2.8rem' }} />
           </div>
         </Col>
-        <Col xs={11} className="g-0">
+        <Col xs={10} className="g-0">
           <input
             className="tweet_post_input"
             placeholder="What's happening?"

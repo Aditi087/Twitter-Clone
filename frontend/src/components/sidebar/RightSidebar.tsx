@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { FcGoogle } from 'react-icons/fc';
 import { GrApple } from 'react-icons/gr';
@@ -9,9 +9,16 @@ import '../auth/auth.css';
 interface IRightSidebarProps {}
 
 const RightSidebar: React.FunctionComponent<IRightSidebarProps> = (props) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(
-    localStorage.getItem('GloginToken')
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  useEffect(() => {
+    if (
+      localStorage.getItem('GloginToken') !== null ||
+      localStorage.getItem('token') !== null
+    ) {
+      setIsLoggedIn(true);
+    }
+  });
+
   const navigate = useNavigate();
   const login = useGoogleLogin({
     onSuccess: (tokenResponse: any) => {
@@ -29,7 +36,7 @@ const RightSidebar: React.FunctionComponent<IRightSidebarProps> = (props) => {
   return (
     <div className="rsidebar_body">
       <div className="rsidebar_body2">
-        {isLoggedIn === null && (
+        {isLoggedIn === false && (
           <div className="rsidebar_component">
             <span className="heading4">New to Twitter?</span>
             <span className="small_font">

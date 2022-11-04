@@ -17,8 +17,16 @@
 }
 .dd {
   display: flex;
-  margin-top: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   color: rgb(64, 63, 63);
+  padding: 12px 18px;
+  border-radius: 35px;
+  width: fit-content;
+  cursor: pointer;
+}
+.dd:hover {
+  background-color: rgb(235, 235, 235);
 }
 .menu_icon {
   margin-top: 5px;
@@ -30,11 +38,28 @@
 }
 .logout_section {
   margin-top: 20px;
-  padding: 10px 30px;
-  background-color: bisque;
+  width: 18vw;
+  border: none;
   border-radius: 35px;
   display: flex;
   justify-content: space-between;
+  background-color: transparent;
+}
+.logout_section:hover {
+  background-color: rgb(235, 235, 235);
+}
+.tweet_button {
+  border-radius: 35px;
+  border: none;
+  background-color: rgb(29, 155, 240);
+  color: white;
+  padding: 12px;
+  width: 14vw;
+  font-weight: bold;
+}
+.modal-body {
+  margin: 0 !important;
+  height: fit-content !important;
 }
 
 /* --- right side bar ---  */
@@ -71,7 +96,7 @@
   color: rgb(29, 155, 240);
 }
 .rsidebar_footer {
-  width: 20vw;
+  width: 25vw;
   margin: 15px 0px;
   text-align: justify;
 }

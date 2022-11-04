@@ -1,6 +1,6 @@
 .tweet_post_body {
   width: 100%;
-  padding: 15px 20px;
+  padding: 15px;
 }
 .post_user {
   height: fit-content;
@@ -9,13 +9,12 @@
   background-color: rgb(189, 189, 189);
   display: flex;
   justify-content: center;
+  margin: auto;
 }
 .tweet_post_input {
   height: 100%;
   width: 100%;
-  padding: 0px 15px;
   border: none;
-  margin-left: 2px;
 }
 .tweet_post_input::placeholder {
   font-size: 18px;

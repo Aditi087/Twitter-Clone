@@ -17,6 +17,7 @@ import TextField from '@mui/material/TextField';
 import Form from 'react-bootstrap/Form';
 import { Button } from '@mui/material';
 import axios from 'axios';
+import Footer1 from '../footer/Footer1';
 
 interface ILayoutProps {}
 
@@ -73,7 +74,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
     ) {
       setIsLoggedIn(true);
     }
-  }, []);
+  });
 
   const navigate = useNavigate();
   const login = useGoogleLogin({
@@ -273,7 +274,7 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
         <RightSidebar />
       </div>
       {/* <Footer1 /> */}
-      {isLoggedIn === true && (
+      {isLoggedIn === false && (
         <div id="footer1_body">
           <div className="footer1_body2">
             <div className="footer_part1">
