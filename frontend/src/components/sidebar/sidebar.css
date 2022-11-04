@@ -57,7 +57,7 @@
   width: 14vw;
   font-weight: bold;
 }
-.modal-body {
+.tweet_modal_body {
   margin: 0 !important;
   height: fit-content !important;
 }

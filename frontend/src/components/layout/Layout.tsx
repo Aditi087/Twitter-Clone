@@ -15,7 +15,6 @@ import { useGoogleLogin } from '@react-oauth/google';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Form from 'react-bootstrap/Form';
-import { Button } from '@mui/material';
 import axios from 'axios';
 import Footer1 from '../footer/Footer1';
 
@@ -558,7 +557,9 @@ const Layout: React.FunctionComponent<ILayoutProps> = (props) => {
               >
                 <option>Month</option>
                 {Months.map((m, index) => (
-                  <option value={index + 1}>{m}</option>
+                  <option value={index + 1} key={index}>
+                    {m}
+                  </option>
                 ))}
               </Form.Select>
               <Form.Select

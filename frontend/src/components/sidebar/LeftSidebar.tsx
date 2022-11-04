@@ -251,13 +251,13 @@ const LeftSidebar: React.FunctionComponent<ILeftSidebarProps> = (props) => {
           )}
         </div>
       </div>
-      <Modal show={show} backdrop="static" className="tweet_modal_body">
+      <Modal show={show} backdrop="static">
         <Modal.Header>
           <Modal.Title className="modal_header">
             <IoMdClose onClick={handleModalClose} />
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body className="modal_body">
+        <Modal.Body className="tweet_modal_body">
           <TweetPost />
         </Modal.Body>
       </Modal>
