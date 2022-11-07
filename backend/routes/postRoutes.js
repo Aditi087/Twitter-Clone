@@ -141,8 +141,20 @@ router.route('/retweet').put(async (req, res) => {
 
 router.route('/allPost').get(async (req, res) => {
   const { userId } = req.query;
-  const allPost = await postModel.find({ userId }).sort({ postId: -1 });
-  res.send({ allPost });
+  const allPost = [];
+  const followingUserId = await userModel.findOne({ userId });
+  const myPost = await postModel.find({ userId });
+  allPost.push(...myPost);
+  for (let i = 0; i < followingUserId.following.length; i++) {
+    const data = await postModel.find({
+      userId: followingUserId.following[i].userId,
+    });
+    allPost.push(...data);
+  }
+  allPost.sort((a, b) => {
+    return b.postId - a.postId;
+  });
+  res.status(200).send({ allPost });
 });
 
 module.exports = router;
