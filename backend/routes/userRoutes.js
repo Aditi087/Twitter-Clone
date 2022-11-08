@@ -130,6 +130,4 @@ router.route('/follow').put(async (req, res) => {
   }
 });
 
-// router.route('/tweetAndRetweet').get(async (res, res) => {});
-
 module.exports = router;
