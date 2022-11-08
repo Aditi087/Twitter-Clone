@@ -3,6 +3,7 @@ const router = express.Router();
 const postModel = require('../models/postModel');
 const userModel = require('../models/userModels');
 const cloudinary = require('cloudinary');
+const { route } = require('./userRoutes');
 
 router.route('/').get(async (req, res) => {
   res.send('post Routes');
@@ -54,21 +55,56 @@ router.route('/like').put(async (req, res) => {
   const { postId, userId } = req.body;
   const singlePost = await postModel.findOne({ postId });
   const singleUser = await userModel.findOne({ userId });
-  if (!singlePost) {
+  if (!singlePost || !singleUser) {
     res.status(500).send({ message: 'Post Not Found' });
   } else {
     const { name } = singleUser;
-    await postModel
-      .updateOne(
-        { postId },
-        { $set: { like: [...singlePost.like, { userId, name }] } }
-      )
-      .then((data) => {
-        res.status(200).send({ message: 'Succesfully liked !', data });
-      })
-      .catch((err) => {
-        res.status(400).send({ err });
-      });
+    let isLiked;
+    const likedUser = singlePost.like;
+    likedUser.forEach((uId) => {
+      if (uId.userId === userId) {
+        isLiked = uId;
+      }
+    });
+    if (isLiked) {
+      await postModel
+        .updateOne({ postId }, { $pull: { like: { userId } } })
+        .then((data) => {
+          res.status(200).send({ message: 'Succesfully Unlike !', data });
+        })
+        .catch((err) => {
+          res.status(400).send({ err });
+        });
+    } else {
+      await postModel
+        .updateOne(
+          { postId },
+          { $set: { like: [...singlePost.like, { userId, name }] } }
+        )
+        .then((data) => {
+          res.status(200).send({ message: 'Succesfully liked !', data });
+        })
+        .catch((err) => {
+          res.status(400).send({ err });
+        });
+    }
+  }
+});
+
+router.route('/isLiked').get(async (req, res) => {
+  const { postId, userId } = req.query;
+  const singlePost = await postModel.findOne({ postId });
+  let isLiked = false;
+  const likedUser = singlePost.like;
+  likedUser.forEach((uId) => {
+    if (uId.userId == userId) {
+      isLiked = true;
+    }
+  });
+  if (isLiked) {
+    res.status(200).send({ like: true });
+  } else {
+    res.status(200).send({ like: false });
   }
 });
 
@@ -155,6 +191,18 @@ router.route('/allPost').get(async (req, res) => {
     return b.postId - a.postId;
   });
   res.status(200).send({ allPost });
+});
+
+router.route('/ownTweetAndRetweet').get(async (req, res) => {
+  const { userId } = req.query;
+  let allTweetAndRetweet = await postModel.find({ userId });
+  const retweetId = await userModel.findOne({ userId });
+  for (let i = 0; i < retweetId.retweet.length; i++) {
+    const postId = retweetId.retweet[i].postId;
+    const originalPost = await postModel.findOne({ postId });
+    allTweetAndRetweet.push(originalPost);
+  }
+  res.send(allTweetAndRetweet);
 });
 
 module.exports = router;
