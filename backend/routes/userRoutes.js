@@ -77,11 +77,17 @@ router.route('/login').post(async (req, res) => {
   }
 });
 
-router.route('/following').put(async (req, res) => {
+router.route('/follow').put(async (req, res) => {
   const { userId, followingId } = req.body;
   const followingUser = await userModel.findOne({ userId: followingId });
   const user = await userModel.findOne({ userId });
-  if (followingUser && user) {
+  const isFollowed = await userModel.findOne({
+    userId,
+    'following.userId': followingId,
+  });
+  if (isFollowed) {
+    res.status(301).send({ message: 'You are already Followed' });
+  } else if (followingUser && user && !isFollowed) {
     await userModel
       .updateOne(
         { userId },
