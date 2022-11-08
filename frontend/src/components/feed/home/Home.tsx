@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Card } from 'react-bootstrap';
-import { FaRegComment } from 'react-icons/fa';
+import { BsHeart } from 'react-icons/bs';
+import { FaRegComment, FaRetweet } from 'react-icons/fa';
+import { FiUpload } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import HomeHeader from '../../header/HomeHeader';
 import TweetPost from '../../post/TweetPost';
+import './home.css';
 
 interface IHomeProps {}
 
@@ -32,13 +35,14 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
       <div className="home_body">
         <TweetPost />
         {homePost &&
-          homePost?.map((e: any) => (
-            <div className="home_posts">
+          homePost?.map((e: any, index1) => (
+            <div className="home_posts" key={index1}>
               <div className="d-flex">
                 <div className="post_user_img">
                   <img
                     src="https://img.freepik.com/premium-vector/female-user-profile-avatar-is-woman-character-screen-saver-with-emotions_505620-617.jpg?w=2000"
                     alt="img"
+                    style={{ height: '50px', width: '50px' }}
                   />
                 </div>
                 <div>
@@ -49,13 +53,35 @@ const Home: React.FunctionComponent<IHomeProps> = (props) => {
                   <p>{e?.content}</p>
                 </div>
               </div>
-              <div>
-                <img src="" alt="img" />
-              </div>
-              <div className="home_post_footer">
+              {e?.images?.map((postImg: any, index2: number) => (
+                <div key={index2}>
+                  <img
+                    src={postImg?.url}
+                    alt="img"
+                    style={{ width: '30rem' }}
+                  />
+                </div>
+              ))}
+
+              <div className="home_post_footer d-flex justify-content-around">
                 <Link to="#">
                   <div>
                     <FaRegComment />
+                  </div>
+                </Link>
+                <Link to="#">
+                  <div>
+                    <FaRetweet />
+                  </div>
+                </Link>
+                <Link to="#">
+                  <div>
+                    <BsHeart />
+                  </div>
+                </Link>
+                <Link to="#">
+                  <div>
+                    <FiUpload />
                   </div>
                 </Link>
               </div>

@@ -34,3 +34,28 @@
 .disable_btn {
   background-color: rgb(29, 155, 240) !important;
 }
+.tweet_post_extras {
+  color: rgb(29, 155, 240);
+  margin: 0px 7px;
+  border-radius: 35px;
+  height: 30px;
+  width: 30px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.tweet_post_extras:hover {
+  background-color: rgba(240, 240, 240, 0.899);
+}
+.tweet_post_footer {
+  border-top: 1px solid rgba(236, 236, 236, 0.845);
+}
+.tweet_post_extras_input {
+  /* display: none; */
+  /* visibility: hidden; */
+  opacity: 0;
+  z-index: 2;
+}
+.input-icons {
+  position: absolute;
+}
