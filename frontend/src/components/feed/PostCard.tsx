@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { AnyAaaaRecord } from 'dns';
 import React, { useState, useEffect } from 'react';
-import { BsHeart } from 'react-icons/bs';
+import { BsFillHeartFill, BsHeart } from 'react-icons/bs';
 import { FaRegComment, FaRetweet } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
 import { FiUpload } from 'react-icons/fi';
@@ -74,7 +74,13 @@ const PostCard: React.FunctionComponent<IPostCard> = ({ singlePost }) => {
             className="post_footer_button like_button"
             onClick={likeButton}
           >
-            <div>{like === false ? <BsHeart /> : <FcLike />}</div>
+            <div>
+              {like === false ? (
+                <BsHeart />
+              ) : (
+                <BsFillHeartFill style={{ color: 'red' }} />
+              )}
+            </div>
           </button>
           <button className="post_footer_button">
             <div>

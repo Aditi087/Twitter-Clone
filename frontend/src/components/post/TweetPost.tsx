@@ -181,7 +181,11 @@ const TweetPost: React.FunctionComponent<ITweetPostProps> = (props) => {
             (tweetPost.trim().length > 0 && 'disable_btn')
           }
           onClick={TweetSubmit}
-          disabled={tweetPost.trim().length > 0 ? false : true}
+          disabled={
+            tweetPost.trim().length > 0 || postImageUrl.length > 0
+              ? false
+              : true
+          }
         >
           <b>Tweet</b>
         </button>
