@@ -28,7 +28,7 @@ router.route('/addTweet').post(async (req, res) => {
     });
   }
   // req.body.images = imageLinks;
-  if (userId && content) {
+  if ((userId && content) || (userId && images.length > 0)) {
     await postModel
       .create({
         userId,
@@ -47,7 +47,9 @@ router.route('/addTweet').post(async (req, res) => {
         return res.status(400).json({ message: 'An error occures', err });
       });
   } else {
-    return res.status(401).json({ message: 'userId or content undefined' });
+    return res
+      .status(401)
+      .json({ message: 'userId or content/images undefined' });
   }
 });
 
